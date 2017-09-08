@@ -19,12 +19,12 @@ public class InferenceEngine {
 			String temp = premissas.get(i);
 
 			if (conclusao.equals(temp)) {
-				System.out.println("\nA conclus„o È verdadeira devido a premissa " + (i + 1) + ". " + temp);
+				System.out.println("\nA conclus√£o √© verdadeira devido a premissa " + (i + 1) + ". " + temp);
 				flag = 1;
 			}
 		}
 
-		// Testando o caso em que a conclus„o È equivalente (por exemplo, A->B =
+		// Testando o caso em que a conclus√£o √© equivalente (por exemplo, A->B =
 		// ~AvB)
 		String conclusaoEquivalente = "";
 
@@ -39,14 +39,17 @@ public class InferenceEngine {
 			}
 
 		} else {
+			// Testando conclus√µes equivalentes com AND e OR
 			if (conclusao.contains(Main.AND) || conclusao.contains(Main.OR)) {
 				String[] termos = conclusao.split(" ");
 
 				for (int i = 0; i < termos.length; i++) {
+					// Equival√™ncia com AND: A and B = B and A
 					if (termos[i].equals(Main.AND)) {
 						String[] operandos = buscarOperandos(termos, i);
 						conclusaoEquivalente = operandos[1] + " and " + operandos[0];
 					} else {
+						// Equival√™ncia com OR: A or B = B or A
 						if (termos[i].equals(Main.OR)) {
 							String[] operandos = buscarOperandos(termos, i);
 							conclusaoEquivalente = operandos[1] + " or " + operandos[0];
@@ -61,7 +64,7 @@ public class InferenceEngine {
 			String temp = premissas.get(i);
 
 			if (conclusaoEquivalente.equals(temp)) {
-				System.out.println("\nA conclus„o È verdadeira devido a premissa " + (i + 1) + ". " + temp);
+				System.out.println("\nA conclus√£o √© verdadeira devido a premissa " + (i + 1) + ". " + temp);
 				flag = 1;
 			}
 		}
@@ -77,7 +80,7 @@ public class InferenceEngine {
 			System.out.println((i + 1) + ". " + temp);
 		}
 		System.out.println();
-		System.out.println("Conclus„o: ");
+		System.out.println("Conclus√£o: ");
 		System.out.println(conclusao);
 		System.out.println("===============");
 
@@ -100,14 +103,14 @@ public class InferenceEngine {
 
 			for (int j = 0; j < itens.length; j++) {
 
-				// Se um fato for encontrado, verifica se d· pra aplicar And
+				// Se um fato for encontrado, verifica se d√° pra aplicar And
 				// Introduction
 				if (itens.length == 1) {
 					introduction(itens[0]);
 				}
 
-				// Se um operador 'implies' for encontrado verifica se d· pra
-				// aplicar Modus Ponens e aplica EquivalÍncia
+				// Se um operador 'implies' for encontrado verifica se d√° pra
+				// aplicar Modus Ponens e aplica Equival√™ncia
 				if (itens[j].equals(Main.IMPLIES)) {
 
 					String[] operandos = buscarOperandos(itens, j);
@@ -127,8 +130,8 @@ public class InferenceEngine {
 
 				}
 
-				// Se um operador 'or' for encontrado verifica se d· aplicar
-				// ResoluÁ„o e ResoluÁ„o Unit·ria
+				// Se um operador 'or' for encontrado verifica se d√° aplicar
+				// Resolu√ß√£o e Resolu√ß√£o Unit√°ria
 				if (itens[j].equals(Main.OR)) {
 
 					String[] operandos = buscarOperandos(itens, j);
@@ -138,8 +141,8 @@ public class InferenceEngine {
 
 				}
 
-				// Se dois operadores 'not' forem encontrados um apÛs o outro,
-				// aplica-se a regra Dupla NegaÁ„o
+				// Se dois operadores 'not' forem encontrados um ap√≥s o outro,
+				// aplica-se a regra Dupla Nega√ß√£o
 				if (j != itens.length - 1) {
 					if (itens[j].equals(Main.NOT) && itens[j + 1].equals(Main.NOT)) {
 
@@ -189,7 +192,7 @@ public class InferenceEngine {
 	}
 
 	/*
-	 * AplicaÁ„o da regra And Introduction:
+	 * Aplica√ß√£o da regra And Introduction:
 	 * 
 	 * A B
 	 * 
@@ -202,7 +205,7 @@ public class InferenceEngine {
 			String premissa = premissas.get(i);
 
 			if (premissa.length() == 1 && !premissa.equals(fato)) {
-				System.out.println("Aplicando AND IntroduÁ„o nos fatos " + fato + " e " + premissa);
+				System.out.println("Aplicando AND Introdu√ß√£o nos fatos " + fato + " e " + premissa);
 				premissa = fato + " and " + premissa;
 				adicionarPremissa(premissa);
 				listarPremissas();
@@ -213,7 +216,7 @@ public class InferenceEngine {
 	}
 
 	/*
-	 * AplicaÁ„o da regra Modus Ponens:
+	 * Aplica√ß√£o da regra Modus Ponens:
 	 * 
 	 * A implies B A
 	 * 
@@ -234,7 +237,7 @@ public class InferenceEngine {
 	}
 
 	/*
-	 * AplicaÁ„o da Regra de EquivalÍncia:
+	 * Aplica√ß√£o da Regra de Equival√™ncia:
 	 * 
 	 * A implies B
 	 * 
@@ -253,7 +256,7 @@ public class InferenceEngine {
 	}
 
 	/*
-	 * AplicaÁ„o da Regra de And Elimination:
+	 * Aplica√ß√£o da Regra de And Elimination:
 	 * 
 	 * A and B
 	 * 
@@ -262,7 +265,7 @@ public class InferenceEngine {
 	public void elimination(String op1, String op2) {
 
 		if (flag == 0) {
-			System.out.println("Aplicando a regra AND EliminaÁ„o em (" + op1 + " and " + op2 + "):");
+			System.out.println("Aplicando a regra AND Elimina√ß√£o em (" + op1 + " and " + op2 + "):");
 
 			String prem = op1;
 			adicionarPremissa(prem);
@@ -272,7 +275,7 @@ public class InferenceEngine {
 	}
 
 	/*
-	 * AplicaÁ„o da Regra de ResoluÁ„o Unit·ria:
+	 * Aplica√ß√£o da Regra de Resolu√ß√£o Unit√°ria:
 	 * 
 	 * A or B not B
 	 * 
@@ -284,7 +287,7 @@ public class InferenceEngine {
 
 			if (premissas.get(i).equals("not " + op2)) {
 				System.out.print(
-						"Aplicando a regra ResoluÁ„o Unit·ria em: (" + op1 + " or " + op2 + ") e (not " + op2 + "):");
+						"Aplicando a regra Resolu√ß√£o Unit√°ria em: (" + op1 + " or " + op2 + ") e (not " + op2 + "):");
 				System.out.println();
 
 				adicionarPremissa(op1);
@@ -297,7 +300,7 @@ public class InferenceEngine {
 	}
 
 	/*
-	 * AplicaÁ„o da Regra de ResoluÁ„o:
+	 * Aplica√ß√£o da Regra de Resolu√ß√£o:
 	 * 
 	 * A or B not B or C
 	 * 
@@ -307,7 +310,7 @@ public class InferenceEngine {
 
 		for (int i = 0; i < premissas.size() && flag == 0; i++) {
 
-			// verificando se d· pra aplicar ResoluÁ„o
+			// verificando se d√° pra aplicar Resolu√ß√£o
 			if (premissas.get(i).contains("or")) {
 				if (!premissas.get(i).contains("not not " + op1) && !premissas.get(i).contains("not not " + op2)) {
 					if (premissas.get(i).contains("not " + op2) || premissas.get(i).contains("not " + op1)) {
@@ -322,9 +325,9 @@ public class InferenceEngine {
 						String prem = "";
 
 						System.out.println(
-								"Aplicando a regra ResoluÁ„o nas premissas " + (codPremissa + 1) + " e " + (i + 1));
+								"Aplicando a regra Resolu√ß√£o nas premissas " + (codPremissa + 1) + " e " + (i + 1));
 
-						// Formando a sentenÁa resultante da regra de Resolucao,
+						// Formando a senten√ßa resultante da regra de Resolucao,
 						// considerando a ordem A v B 'ou' B v C
 						if (operandos[1].equals("not " + op2)) {
 							prem = op1 + " or " + operandos[0];
@@ -352,7 +355,7 @@ public class InferenceEngine {
 	}
 
 	/*
-	 * AplicaÁ„o da Regra de Dupla NegaÁ„o:
+	 * Aplica√ß√£o da Regra de Dupla Nega√ß√£o:
 	 * 
 	 * not not A
 	 * 
@@ -362,7 +365,7 @@ public class InferenceEngine {
 
 		if (flag == 0) {
 			System.out.println();
-			System.out.print("Aplicando a regra Dupla NegaÁ„o na sentenÁa: ");
+			System.out.print("Aplicando a regra Dupla Nega√ß√£o na senten√ßa: ");
 
 			for (int i = 0; i < itens.length; i++) {
 				System.out.print(itens[i] + " ");
@@ -373,7 +376,7 @@ public class InferenceEngine {
 			itens[j + 1] = "";
 			String prem = "";
 
-			System.out.print("\nSentenÁa resultante: ");
+			System.out.print("\nSenten√ßa resultante: ");
 			for (int i = 0; i < itens.length; i++) {
 
 				if (i == itens.length - 1) {
@@ -384,7 +387,7 @@ public class InferenceEngine {
 
 			}
 
-			// Retirando os espaÁos gerados na hora da geraÁ„o da regra
+			// Retirando os espa√ßos gerados na hora da gera√ß√£o da regra
 			// resultante!
 			String premissaFormatoPadrao = "";
 
