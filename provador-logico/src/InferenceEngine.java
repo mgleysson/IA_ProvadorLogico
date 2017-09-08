@@ -194,7 +194,8 @@ public class InferenceEngine {
 	/*
 	 * Aplicação da regra And Introduction:
 	 * 
-	 * A B
+	 * A 
+	 * B
 	 * 
 	 * Resultado: (A and B)
 	 */
@@ -218,7 +219,8 @@ public class InferenceEngine {
 	/*
 	 * Aplicação da regra Modus Ponens:
 	 * 
-	 * A implies B A
+	 * A implies B
+	 * A
 	 * 
 	 * Resultado: B
 	 */
@@ -277,8 +279,9 @@ public class InferenceEngine {
 	/*
 	 * Aplicação da Regra de Resolução Unitária:
 	 * 
-	 * A or B not B
-	 * 
+	 * A or B 
+	 * not B
+	 *
 	 * Resultado: A
 	 */
 	public void unitResolution(String op1, String op2) {
@@ -302,8 +305,9 @@ public class InferenceEngine {
 	/*
 	 * Aplicação da Regra de Resolução:
 	 * 
-	 * A or B not B or C
-	 * 
+	 * A or B
+	 * not B or C
+	 *
 	 * Resultado: A or C
 	 */
 	public void resolution(String op1, String op2, int codPremissa) {
